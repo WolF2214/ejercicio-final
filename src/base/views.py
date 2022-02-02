@@ -42,12 +42,14 @@ class TaskList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        #MyFilter = TaskFilter(request.GET,queryset=tasks)
-        #context = {'myFilter':myFilter}
         context['tasks'] = context['tasks'].filter(user=self.request.user)
-        
+        #context['filter'] = TaskFilter(self.request.GET, queryset=self.get_queryset())
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            context['tasks'] = context['tasks'].filter(name__startswith=search_input)
+        context['search_input'] = search_input
         return context
-     
+
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
     fields = ['name', 'description', 'comments', 'state', 'expire_date']

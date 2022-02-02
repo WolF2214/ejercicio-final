@@ -30,7 +30,7 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
-        return datetime.today() > self.expire_date.replace(tzinfo=None)
+        return datetime.today() > self.date.replace(tzinfo=None)
     
 
     
