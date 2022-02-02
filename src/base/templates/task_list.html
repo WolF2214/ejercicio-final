@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %} Task: Listado {% endblock %}    
+
+{% block content %}
+    </div>
+    <div class="col col-sm-12 col-lg-8"></div>
+        <a href="{% url 'task-create' %}">New Task</a>
+    </div>
+    <br>
+    <br>
+    <div>
+        <form method="get">
+            {{myFilter.form}}
+        <button class="btn btn-primary" type="submit">Filter</button>
+        </form>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col col-sm-12 col-lg-8">
+        <table class="table table-success table-striped">
+            <thead>
+                <th id='title1'>Task</th> 
+                <th class="title">Description</th>
+                <th>State</th>
+                <th>Expired Task</th>
+                <th></th>
+                <th></th>
+            </thead>
+            <body>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{task.name}}</td>
+                    <td>{{task.description}}</td>
+                    <td>{{task.state}}</td>
+                    <td>{% if task.is_past_due %}
+                        <p class="text-danger">expired</p>
+                        {% else %}
+                        {{ task.expire_date }}
+                        {% endif %}</td>
+                    <td><a href="{% url 'task-update' task.id %}">Detail</a></td>
+                    <td><a href="{% url 'task-delete' task.id %}">Delete</a></td>
+                </tr>
+                {% empty %}
+                <h3>No items in list</h3>
+                {% endfor %}
+            </body>
+        </table>
+</div>
+
+<br>
+
+{% endblock %}
+  
