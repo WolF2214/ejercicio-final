@@ -1,15 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
-
-class State(models.Model):
-    name = models.CharField(max_length=30)
-
-    def __str__(self):
-        return f'C-{self.name.title()}'
+from django.http import HttpResponse, JsonResponse
 
 class Task(models.Model):
-    STATUS_CHOINES = (
+    STATUS_CHOICES = (
         ('All', 'All'),
         ('In Progress', 'In Progress'),
         ('Done', 'Done'),
@@ -19,19 +14,12 @@ class Task(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField(null=True, blank=True)
     comments = models.CharField(max_length=30)
-    state  = models.CharField('State', max_length=20, choices=STATUS_CHOINES, 
+    state  = models.CharField('State', max_length=20, choices=STATUS_CHOICES, 
                                 default='A')
     date_create = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)                         
     expire_date = models.DateTimeField('Expired Date ', null=True, blank=True)
-
-    class Meta:
-        ordering = ['expire_date']
-
-    def __str__(self):
-        return self.name
-        return datetime.today() > self.date.replace(tzinfo=None)
     
-
-    
+    def is_past_due(self):
+        return datetime.today() > self.expire_date.replace(tzinfo=None)
     

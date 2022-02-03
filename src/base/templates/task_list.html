@@ -34,11 +34,13 @@
                     <td>{{task.name}}</td>
                     <td>{{task.description}}</td>
                     <td>{{task.state}}</td>
-                    <td>{% if tasks.is_past_due %}
-                        <p class="text-danger">tarea vencida</p>
+                    <td>
+                        {% if tasks.is_past_due %}
+                        <p class="text-danger">tarea vencida desde {{ task.expire_date }}</p>
                         {% else %}
-                        Expired since {{ task.expire_date }}
-                        {% endif %}</td>
+                        {{ task.expire_date }}
+                        {% endif %}
+                    </td>
                     <td><a href="{% url 'task-update' task.id %}">Detail</a></td>
                     <td><a href="{% url 'task-delete' task.id %}">Delete</a></td>
                 </tr>

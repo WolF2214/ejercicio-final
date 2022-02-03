@@ -8,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .models import Task
 from .filters import TaskFilter
+import datetime
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
