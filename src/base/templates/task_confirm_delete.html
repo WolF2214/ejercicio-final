@@ -1,7 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
 
-<a href="{% url 'tasks' %}">Return</a>
 <form method="POST">
     {% csrf_token %}
-    <p>Are you sure you want to delte ehis task? "{{task}}"</p>
-    <input type="submit"value="Delete"/>
+    <p>Are you sure you want to delte this task? </p>
+    <a class="btn btn-Light" href="{% url 'tasks' %}">Return</a>
+    <input class="btn btn-danger" type="submit"value="Delete"/>
 </form>
+{% endblock content %}  

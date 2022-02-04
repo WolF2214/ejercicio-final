@@ -9,6 +9,8 @@ from django.contrib.auth import login
 from .models import Task
 from .filters import TaskFilter
 import datetime
+from django import forms
+from django.views.generic import ListView
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
@@ -44,11 +46,7 @@ class TaskList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
-        #context['filter'] = TaskFilter(self.request.GET, queryset=self.get_queryset())
-        search_input = self.request.GET.get('search-area') or ''
-        if search_input:
-            context['tasks'] = context['tasks'].filter(name__startswith=search_input)
-        context['search_input'] = search_input
+        context['filter'] = TaskFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
 class TaskCreate(LoginRequiredMixin, CreateView):
@@ -72,3 +70,4 @@ class DeleteView(LoginRequiredMixin, DeleteView):
     context_object_name = 'task'
     success_url = reverse_lazy('tasks')
     template_name = 'task_confirm_delete.html'
+
