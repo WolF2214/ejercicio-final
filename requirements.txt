@@ -1,4 +1,5 @@
 django
 django-environ
 django-filter
-django-bootstrap-form   
+django-bootstrap-form
+django-environ==0.4.5

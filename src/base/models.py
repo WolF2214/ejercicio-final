@@ -24,3 +24,4 @@ class Task(models.Model):
     def is_past_due(self):
         return datetime.today() > self.expire_date.replace(tzinfo=None)
     
+ 
